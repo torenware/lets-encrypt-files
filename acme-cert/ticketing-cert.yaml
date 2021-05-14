@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: ticketing-cert
+  namespace: default
+spec:
+  secretName: ingress-tls-secret
+  issuerRef:
+    name: letsencrypt-prod
+    kind: Issuer
+  dnsNames:
+    - '*.torensys.com'

@@ -1,0 +1,38 @@
+#
+#Creating a self-signed certificate
+#
+# Based on https://www.ibm.com/docs/en/ztpf/2020?topic=gssccr-configuration-file-generating-self-signed-certificates-certificate-requests
+####################################################################
+[req]
+days                   = 180
+serial                 = 1
+distinguished_name     = req_distinguished_name
+x509_extensions        = v3_ca
+
+
+[req_distinguished_name]
+countryName_default            = US
+stateOrProvinceName_default    = CA
+localityName_default           = Our Fair City
+organizationName_default       = SomeCompany
+commonName                     = Common Name
+commonName_default             = SomeCompanyCACert
+0.emailAddress_default         = moe@somecompany.com
+1.emailAddress_default         = curly@somecompany.com
+2.emailAddress_default         = larry@somecompany.com
+
+
+[ v3_ca ]
+# The extentions to add to a self-signed cert
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid:always,issuer:always
+basicConstraints       = critical,CA:TRUE
+keyUsage               = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment, keyAgreement, keyCertSign
+subjectAltName         = DNS:somecompany.com
+issuerAltName          = issuer:copy
+
+# [ v3_ca ]
+# basicConstraints = critical,CA:TRUE
+# subjectKeyIdentifier = hash
+# authorityKeyIdentifier = keyid:always,issuer:always
+
