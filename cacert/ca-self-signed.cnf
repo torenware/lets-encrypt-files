@@ -9,7 +9,6 @@ serial                 = 1
 distinguished_name     = req_distinguished_name
 x509_extensions        = v3_ca
 
-
 [req_distinguished_name]
 countryName_default            = US
 stateOrProvinceName_default    = CA
@@ -21,18 +20,16 @@ commonName_default             = SomeCompanyCACert
 1.emailAddress_default         = curly@somecompany.com
 2.emailAddress_default         = larry@somecompany.com
 
-
 [ v3_ca ]
 # The extentions to add to a self-signed cert
+# @see also https://www.freecodecamp.org/news/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec/
 subjectKeyIdentifier   = hash
 authorityKeyIdentifier = keyid:always,issuer:always
 basicConstraints       = critical,CA:TRUE
 keyUsage               = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment, keyAgreement, keyCertSign
-subjectAltName         = DNS:somecompany.com
+subjectAltName         = @alt_names
 issuerAltName          = issuer:copy
 
-# [ v3_ca ]
-# basicConstraints = critical,CA:TRUE
-# subjectKeyIdentifier = hash
-# authorityKeyIdentifier = keyid:always,issuer:always
+[alt_names]
+DNS.1 = localhost
 
