@@ -4,7 +4,7 @@ metadata:
   name: letsencrypt-staging
 spec:
   acme:
-    email: rob@torenware.com
+    email: your@email.net
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       # Secret resource that will be used to store the account's private key.
@@ -17,13 +17,18 @@ spec:
     # to assume a role in a different account
     - selector:
         dnsZones:
-          - "*.torensys.com"
+          # wild-card domains are easy to do:
+          - "*.your-domain.com"
       dns01:
         route53:
+          # This section needs to be filled in with your
+          # data from Route53 and your IAM account that's
+          # tasked with handling changes to DNS.
+          # @see https://cert-manager.io/docs/configuration/acme/dns01/route53/
           region: us-west-2
-          hostedZoneID: Z1QJ813Z5CCFF7 # optional, see policy above
-          role: arn:aws:iam::802129099889:role/acme-cert-manager 
-          accessKeyID: AKIA3VQU6XRYUH5DBGXL
+          hostedZoneID: Z?????????? # optional, see policy above
+          role: arn:aws:iam::8**********:role/acme-cert-manager 
+          accessKeyID: AKIA3V******
           secretAccessKeySecretRef:
             name: staging-route53-credentials
             key: secret-access-key
