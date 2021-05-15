@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-laptop
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    # This needs to point to your Issuer resource.
+    cert-manager.io/issuer: letsencrypt-staging
+spec:
+  tls:
+    - hosts:
+      - '*.your-domain.com'
+      secretName: laptop-tls-secret
+  rules:
+    - host: '*.your-domain.com'
+      http:
+        paths:
+          - path: /?(.*) 
+            backend:
+              serviceName: test-service
+              servicePort: 80

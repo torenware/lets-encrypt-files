@@ -1,0 +1,29 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    email: rob@torenware.com
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      # Secret resource that will be used to store the account's private key.
+      # Name is arbitrary.
+      name: acme-issuer-account-key
+
+    solvers:
+    # example: cross-account zone management for example.com
+    # this solver uses ambient credentials (i.e. inferred from the environment or EC2 Metadata Service)
+    # to assume a role in a different account
+    - selector:
+        dnsZones:
+          - "*.torensys.com"
+      dns01:
+        route53:
+          region: us-west-2
+          hostedZoneID: Z1QJ813Z5CCFF7 # optional, see policy above
+          role: arn:aws:iam::802129099889:role/acme-cert-manager 
+          accessKeyID: AKIA3VQU6XRYUH5DBGXL
+          secretAccessKeySecretRef:
+            name: staging-route53-credentials
+            key: secret-access-key

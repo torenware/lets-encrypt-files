@@ -1,0 +1,19 @@
+# This is used for testing our issuer. Normally
+# the ingress-nginx controller and CertManager
+# order up a cert in background without an
+# explicit request from a human. To make our
+# debugging work easier, we use this test
+# file to ask directly.
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: laptop-acme-cert
+  namespace: default
+spec:
+  secretName: ingress-acme-secret
+  issuerRef:
+    # This points to your issuer resource.
+    name: letsencrypt-staging
+    kind: Issuer
+  dnsNames:
+    - '*.torensys.com'
