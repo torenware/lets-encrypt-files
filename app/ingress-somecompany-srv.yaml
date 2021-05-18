@@ -1,0 +1,20 @@
+#
+# This is the "before" version of the file. See the Medium article
+# for instructions as to how to make this file "cert-manager" aware.
+#
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-somecompany-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+spec:
+  rules:
+    - host: dev.somecompany.com
+      http:
+        paths:
+          - path: /?(.*) 
+            backend:
+              serviceName: test-service
+              servicePort: 80
