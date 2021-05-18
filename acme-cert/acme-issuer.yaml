@@ -12,13 +12,9 @@ spec:
       name: acme-issuer-account-key
 
     solvers:
-    # example: cross-account zone management for example.com
-    # this solver uses ambient credentials (i.e. inferred from the environment or EC2 Metadata Service)
-    # to assume a role in a different account
     - selector:
         dnsZones:
-          # wild-card domains are easy to do:
-          - "*.your-domain.com"
+          - your-domain.com
       dns01:
         route53:
           # This section needs to be filled in with your
@@ -29,6 +25,8 @@ spec:
           hostedZoneID: Z?????????? # optional, see policy above
           role: arn:aws:iam::8**********:role/acme-cert-manager 
           accessKeyID: AKIA3V******
+          # This contains information about the IAM user you
+          # configured:
           secretAccessKeySecretRef:
             name: staging-route53-credentials
             key: secret-access-key
